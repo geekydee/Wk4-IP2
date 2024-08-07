@@ -1,0 +1,55 @@
+
+services:
+  # Frontend microservice
+  ip2-frontend:
+    image: kajuju/ip2-app-frontend:v3.1.3
+    build:
+      context: ./client
+    container_name: ip2-client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - ip2-backend
+    networks:
+      - ip2-app-net
+
+  # Backend microservice
+  ip2-backend:
+    image: kajuju/ip2-app-backend:v3.0.0
+    build:
+      context: ./backend
+    container_name: ip2-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      - ip2-mongo
+    networks:
+      - ip2-app-net
+    environment:
+      MONGO_URL: mongodb://ip2-mongo:27017/yolomy
+
+  # MongoDB microservice
+  ip2-mongo:
+    image: mongo
+    container_name: ip2-mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - ip2-app-net
+    volumes:
+      - ip2-mongo-data:/data/db
+
+networks:
+  ip2-app-net:
+    name: ip2-app-net
+    driver: bridge
+    attachable: true
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+          ip_range: 172.18.0.0/16
+
+volumes:
+  ip2-mongo-data:
+    name: ip2-mongo-data
