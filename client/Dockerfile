@@ -1,5 +1,5 @@
 # Use an official Node.js 18 image as the build environment
-FROM node:16-slim AS build
+FROM node:16-alpine3.16 AS build
 
 # Set the working directory in the container
 WORKDIR /client
@@ -8,20 +8,34 @@ WORKDIR /client
 COPY package*.json ./
 
 # Install dependencies without caching
-RUN npm ci --no-cache
+RUN npm ci 
 
 # Copy the rest of the application code to the container
 COPY . .
 
+#Run build to output Production files
+RUN npm run build
+
 #Add multi-stage build with minimal Alpine
-FROM alpine:3.17.9
+#FROM node:16-alpine3.16
+FROM node:16-alpine3.16
 
 WORKDIR /app
 
-# Install npm and remove unnecessary files to keep the image small
-RUN apk add --no-cache npm
+# Install only necessary system packages
+RUN apk add --no-cache nodejs
 
-COPY --from=build /client /app
+#Copy build output from previous stage
+
+COPY --from=build /client/build /app
+COPY --from=build /client/public ./public
+COPY --from=build /client/src ./src
+
+
+#Copy package.json and Install production dependencies, removing unnecessary files
+COPY --from=build /client/package*.json ./
+#RUN apk add npm --no-cache npm
+RUN npm install --production && npm cache clean --force
 
 # Expose the port the app runs on
 EXPOSE 3000
