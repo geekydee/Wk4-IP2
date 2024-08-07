@@ -1,5 +1,5 @@
 # Use an official Node runtime as a parent image
-FROM node:18.20.4 AS build
+FROM node:16-alpine3.16 AS build
 
 # Set the working directory in the container
 WORKDIR /backend
@@ -8,7 +8,7 @@ WORKDIR /backend
 COPY package*.json ./
 
 # Install application dependencies
-RUN npm ci --no-cache
+RUN npm ci 
 
 # Copy the rest of the application code to the container
 COPY . .
