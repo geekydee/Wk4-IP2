@@ -1,0 +1,27 @@
+---
+- name: Deploy Backend Microservice
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Pull Backend Docker Image
+      docker_image:
+        name: kajuju/ip2-app-backend
+        tag: v3.0.0
+        source: pull
+
+    - name: Create Backend Container
+      docker_container:
+        name: ip2-backend
+        image: kajuju/ip2-app-backend:v3.0.0
+        state: started
+        restart_policy: always
+        ports:
+          - "5000:5000"
+        networks:
+          - name: ip2-app-net
+        environment:
+          MONGO_URL: mongodb://ip2-mongo:27017/yolomy
+        depends_on:
+          - ip2-mongo
+

@@ -1,0 +1,24 @@
+---
+- name: Deploy Frontend Microservice
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Pull Frontend Docker Image
+      docker_image:
+        name: kajuju/ip2-app-frontend
+        tag: v3.1.3
+        source: pull
+
+    - name: Create Frontend Container
+      docker_container:
+        name: ip2-client
+        image: kajuju/ip2-app-frontend:v3.1.3
+        state: started
+        ports:
+          - "3000:3000"
+        networks:
+          - name: ip2-app-net
+        depends_on:
+          - ip2-backend
+
