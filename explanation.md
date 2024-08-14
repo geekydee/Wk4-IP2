@@ -10,13 +10,18 @@ Objectives of the IP2 have been achieved as outlined below:
 2. Versioned images pushed to Docker Hub: 
     Reconfiguration done on the Dockerfile reduce the image size - The Dockerfiles have multi-stage builds to separate build from prod to further reduce the final image size. 
     With each significant reconfiguration on the respective Dockerfile, in an attempt to build lighter functional images, versioned images have been uplaoded to the repos below:
-    Client app image: https://hub.docker.com/repository/docker/kajuju/ip2-app-frontend/ 
-    backend app image : https://hub.docker.com/repository/docker/kajuju/ip2-app-backend/ 
+    ![image](https://github.com/user-attachments/assets/d58a6d8d-c910-4435-bc0a-37d814659901)
+    Client app image: https://hub.docker.com/repository/docker/kajuju/ip2-app-frontend/
+       ![image](https://github.com/user-attachments/assets/81b049de-706c-4180-abc0-65ae347e3011)
+
+    Backend app image : https://hub.docker.com/repository/docker/kajuju/ip2-app-backend/
+       ![image](https://github.com/user-attachments/assets/a7aec309-a7e9-4291-9514-cce6bd5e219c)
+
     The latest images have been used on the compose file.
 
-3. Dockerfiles - Client and Backend nodes added to respecive directories on the repo : https://github.com/geekydee/Wk4-IP2/tree/main 
+4. Dockerfiles - Client and Backend nodes added to respecive directories on the repo : https://github.com/geekydee/Wk4-IP2/tree/main 
 
-4. Docker compose : compose file addedd to Github repo. https://github.com/geekydee/Wk4-IP2/blob/main/docker-compose.yaml 
+5. Docker compose : compose file addedd to Github repo. https://github.com/geekydee/Wk4-IP2/blob/main/docker-compose.yaml 
 
     Container Networking : all containers are attached to the network below to ensure the services can communicate.
         networks:
