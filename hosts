@@ -1,0 +1,20 @@
+# App servers
+[app]
+ip2-backend
+ip2-client
+
+# DB server
+[db]
+ip2-mongo
+
+# All servers
+[multi:children]
+app
+db
+
+# Variables that will be applied to all servers
+[multi:vars]
+ansible_ssh_user=vagrant
+ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
