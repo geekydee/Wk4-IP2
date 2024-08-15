@@ -1,0 +1,24 @@
+---
+# tasks file for mongodb role
+
+- name: Pull MongoDB Docker Image
+  docker_image:
+    name: mongo
+    source: pull
+
+- name: Create MongoDB Container
+  docker_container:
+    name: ip2-mongo
+    image: mongo
+    state: started
+    ports:
+      - "27017:27017"
+    networks:
+      - name: ip2-app-net
+    volumes:
+      - name: ip2-mongo-data
+        state: present
+        path: /data/db
+  tags:
+    - database
+    - backend

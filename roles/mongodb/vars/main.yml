@@ -1,0 +1,5 @@
+---
+# vars file for mongodb role
+mongo_container_name: ip2_mongo
+mongo_network: ip2-app-net
+mongo_volume: ip2-mongo-data
