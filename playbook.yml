@@ -1,0 +1,18 @@
+---
+- name: Deploy IP2 Application
+  hosts: all
+  become: yes
+
+  roles:
+    - role: network_volume
+      tags: network
+
+    - role: mongodb
+      tags: mongodb
+
+    - role: backend
+      tags: backend
+
+    - role: frontend
+      tags: frontend
+
